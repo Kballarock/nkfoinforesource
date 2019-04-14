@@ -62,7 +62,7 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
         }
 
         if (isUser) {
-            return "/welcome";
+            return "/home";
         } else if (isAdmin) {
             return "/admin";
         } else {

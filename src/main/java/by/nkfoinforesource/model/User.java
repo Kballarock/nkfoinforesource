@@ -1,5 +1,7 @@
 package by.nkfoinforesource.model;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ public class User {
     @Transient
     private String userConfirmPassword;
 
+    @Email
     @Column(name = "u_email", nullable = false)
     private String userEmail;
 

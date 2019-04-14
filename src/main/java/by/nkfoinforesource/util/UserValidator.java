@@ -2,6 +2,7 @@ package by.nkfoinforesource.util;
 
 import by.nkfoinforesource.model.User;
 import by.nkfoinforesource.service.UserService;
+import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -38,8 +39,21 @@ public class UserValidator implements Validator {
             errors.rejectValue("userPassword", "Size.userForm.password");
         }
 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userConfirmPassword", "Required");
         if (!user.getUserConfirmPassword().equals(user.getUserPassword())) {
             errors.rejectValue("userConfirmPassword", "Different.userForm.password");
         }
+
+        EmailValidator emailValidator = new EmailValidator();
+        boolean validEmail = emailValidator.isValid(user.getUserEmail(), null);
+        if (!validEmail) {
+            errors.rejectValue("userEmail", "NotValid.userForm.email");
+        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userEmail", "Required");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userFio", "Required");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userOrganisation", "Required");
     }
 }
